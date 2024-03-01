@@ -8,6 +8,16 @@ import EventPreview from "@/Components/EventPreview";
 export default function Index({ auth, events, cities, spots }) {
     const { data, setData, post, processing, reset, errors } = useForm({
         name: "",
+        description: "",
+        text: "",
+        imageUrl: "",
+        start_date: "",
+        end_date: "",
+        city: "",
+        country: "",
+        spotName: "",
+        capacity: "",
+        spotImageUrl: "",
     });
 
     const [formData, setFormData] = useState({
@@ -34,15 +44,17 @@ export default function Index({ auth, events, cities, spots }) {
     };
     console.log("formData", formData);
     const submit = (e) => {
+        console.log("e", e)
         e.preventDefault();
-        post(route("events.store"), { onSuccess: () => reset() });
+        post(route("events.store"), {  onSuccess: () => reset() });
+        setData(formData); 
     };
 
     return (
         <div className="relative">
             <Head title="Events" />
 
-            <div className="w-full flex justify-center p-4 bg-white border border-gray-200 rounded-lg shadow sticky top-0 ">
+            <div className="w-full flex justify-center p-4 bg-slate-800 border border-gray-200 rounded-lg shadow sticky top-0 ">
                 {/* {events.map((event) => (
                 <Event key={event.id} data={event} />
             ))} */}
@@ -61,8 +73,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         type="text"
                         name="name"
-                        value={data.name}
-                        maxLength={255}
+                        value={formData.name}
                         placeholder="Name event"
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         onChange={handleInputChange}
@@ -70,7 +81,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <InputError message={errors.name} className="mt-2" />
                     <textarea
                         name="description"
-                        value={data.description}
+                        value={formData.description}
                         placeholder="description event"
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         onChange={handleInputChange}
@@ -78,7 +89,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <InputError message={errors.description} className="mt-2" />
                     <textarea
                         name="text"
-                        value={data.text}
+                        value={formData.text}
                         placeholder="text event"
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         onChange={handleInputChange}
@@ -86,7 +97,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <InputError message={errors.text} className="mt-2" />
                     <textarea
                         name="imageUrl"
-                        value={data.imageUrl}
+                        value={formData.imageUrl}
                         placeholder="imageUrl event"
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         onChange={handleInputChange}
@@ -95,7 +106,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         name="start_date"
                         type="date"
-                        value={data.start_date}
+                        value={formData.start_date}
                         onChange={handleInputChange}
                         className="block  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
                     />
@@ -104,7 +115,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         name="end_date"
                         type="date"
-                        value={data.end_date}
+                        value={formData.end_date}
                         onChange={handleInputChange}
                         className="block  border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
                     />
@@ -127,10 +138,9 @@ export default function Index({ auth, events, cities, spots }) {
                         Select an option or create one:
                     </label>
                     <select
-                        value={data.city}
+                        value={formData.city}
                         onChange={handleInputChange}
                         name="city"
-                        disabled
                         id="countries"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
@@ -143,9 +153,8 @@ export default function Index({ auth, events, cities, spots }) {
                     </select>
                     <input
                         name="city"
-                        disabled
                         type="text"
-                        value={data.city}
+                        value={formData.city}
                         placeholder="Name city"
                         onChange={handleInputChange}
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
@@ -153,7 +162,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         name="country"
                         type="text"
-                        value={data.country}
+                        value={formData.country}
                         placeholder="Name country"
                         onChange={handleInputChange}
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
@@ -186,9 +195,8 @@ export default function Index({ auth, events, cities, spots }) {
                         Select an option or create one:
                     </label>
                     <select
-                        id="countries"
-                        name="spot"
-                        value={data.spot}
+                        name="spotName"
+                        value={formData.spotName}
                         onChange={handleInputChange}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
@@ -196,14 +204,13 @@ export default function Index({ auth, events, cities, spots }) {
                         {spots.map((spot) => (
                             <option key={spot.id}>
                                 <p className="mr-2"> {spot.name}</p>
-                                <p> {spot.capacity}</p>
                             </option>
                         ))}
                     </select>
                     <input
                         name="spotName"
                         type="text"
-                        value={data.spotName}
+                        value={formData.spotName}
                         placeholder="Name spotName"
                         onChange={handleInputChange}
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
@@ -211,7 +218,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         name="capacity"
                         type="number"
-                        value={data.capacity}
+                        value={formData.capacity}
                         placeholder="Name capacity"
                         onChange={handleInputChange}
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
@@ -219,7 +226,7 @@ export default function Index({ auth, events, cities, spots }) {
                     <input
                         name="spotImageUrl"
                         type="text"
-                        value={data.spotImageUrl}
+                        value={formData.spotImageUrl}
                         placeholder="Name spotImageUrl"
                         onChange={handleInputChange}
                         className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-2"
@@ -233,7 +240,7 @@ export default function Index({ auth, events, cities, spots }) {
                     {/* ************************spot  *******************************/}
                     {/* ************************spot  *******************************/}
                     {/* ************************spot  *******************************/}
-                    <PrimaryButton className="mt-4" disabled={processing}>
+                    <PrimaryButton className="mt-4" >
                         Créer
                     </PrimaryButton>
                 </form>

@@ -39,6 +39,12 @@ export default function Authenticated({ header, children }) {
                                 >
                                     Events
                                 </NavLink>
+                                <NavLink
+                                    href={route("events.show")}
+                                    active={route().current("events.show")}
+                                >
+                                    All Events
+                                </NavLink>
                             </div>
                         </div>
                         {user && (

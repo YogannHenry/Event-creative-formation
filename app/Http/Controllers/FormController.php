@@ -63,7 +63,6 @@ class FormController extends Controller
         // $event->cities()->attach($city);
     public function store(Request $request)
     {
-
         $request->validate([
                 'name' => 'required|string|max:35',
                 'description' => 'required|string|max:255',
@@ -119,9 +118,15 @@ class FormController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(events $events)
+    public function show()
     {
-        //
+        {
+            $events = Event::with(['cities', 'user', 'spots'])->latest()->get();
+            // dd($events->toArray());
+            return Inertia::render('Events/Show', [
+                'events' => $events,
+            ]);
+        }
     }
 
     /**
