@@ -15,9 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('city');
             $table->string('country');
-            $table->string('state');
-            $table->string('zip_code');
-            $table->foreignId('event_id')->constrained();
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('text');
-            $table->string('imageUrl');
+            $table->string('imageUrl')->default('https://www.emp-online.fr/dw/image/v2/BBQV_PRD/on/demandware.static/-/Sites-master-emp/default/dw40098e58/images/4/7/0/2/470242d.jpg?sfrm=png');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

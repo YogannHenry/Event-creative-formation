@@ -14,13 +14,9 @@ return new class extends Migration
         Schema::create('spots', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
-            $table->string('zip_code');
             $table->integer('capacity');
-            $table->string('imageUrl');
-            $table->string('description');
+            $table->string('imageUrl')->default('https://static.wikia.nocookie.net/heros/images/e/e3/Morty_Infobox.jpg/revision/latest?cb=20200720083654&path-prefix=fr');
             $table->foreignId('city_id')->constrained();
-            $table->foreignId('event_id')->constrained();
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\city;
+use App\Models\City;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -12,7 +12,11 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::latest()->get();
+
+        return Inertia::render('Events/Index', [
+            'cities' => $cities,
+        ]);
     }
 
     /**
@@ -20,7 +24,8 @@ class CityController extends Controller
      */
     public function create()
     {
-        //
+        
+
     }
 
     /**
@@ -28,8 +33,16 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'city' => 'required|string|max:35',
+            'country' => 'required|string|max:255',
+
+        ]);
+
+        $request->cities()->create($validated);
+
+        return redirect(route('events.index'));
+}
 
     /**
      * Display the specified resource.

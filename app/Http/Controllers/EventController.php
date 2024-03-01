@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,10 +16,12 @@ class EventController extends Controller
      */
     public function index(): Response
     {
-        $events = Event::with('user:id,name')->latest()->get();
+        $events = Event::with('cities')->latest()->get();
+        $cities = City::latest()->get();
 
         return Inertia::render('Events/Index', [
             'events' => $events,
+            'cities' => $cities,
         ]);
     }
     /**
@@ -44,9 +47,13 @@ class EventController extends Controller
 
             ]);
 
-            $request->user()->events()->create($validated);
 
-            return redirect(route('events.index'));
+        $event = $request->user()->events()->create($validated);
+
+
+
+
+        return redirect(route('events.index'));
     }
     /**
      * Display the specified resource.
