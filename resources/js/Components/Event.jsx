@@ -1,5 +1,7 @@
 import React from "react";
 import Dropdown from "@/Components/Dropdown";
+import NavLink from "@/Components/NavLink";
+
 
 export default function Event({ data }) {
     console.log("dateEvent", data);
@@ -83,6 +85,12 @@ export default function Event({ data }) {
                         >
                             Delete
                         </Dropdown.Link>
+                        <NavLink
+                                    href={route("tickets.index")}
+                                    active={route().current("tickets.index")}
+                                >
+                                    Acheter ticket
+                                </NavLink>
                     </Dropdown.Content>
                 </Dropdown>
             </div>
